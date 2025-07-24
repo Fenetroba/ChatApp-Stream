@@ -40,13 +40,11 @@ bio: {
 
 );
 
-const User = mongoose.model("User", userSchema);
-   
-export default User;
-userSchema.pre('save',async(next)=>{
 
+userSchema.pre("save",async function (next){
 try {
-     const salt= await bcrypt.salt(10);
+  if (!this.isModified("password")) return next();
+    const salt = await bcrypt.genSalt(10);
   this.password=await bcrypt.hash(this.password,salt)
    next()
 
@@ -55,3 +53,11 @@ try {
 }
 
 })
+// Method to compare password
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+const User = mongoose.model("User", userSchema);
+   
+export default User;
