@@ -31,7 +31,7 @@ export const CreateUser = async (req, res) => {
     const newUser = new User({ Fullname, email, password, profilePic: randomAvatar });
     await newUser.save();
 
-
+//     for create stream user
    try {
       await upsertStreamUser({
         id: newUser._id.toString(),
@@ -106,3 +106,42 @@ export const LogOut = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const Onboarding=(req,res)=>{
+
+try {
+  const {Fullname,bio,nativeLanguage,learningLanguage,location}=req.body
+
+  if(!Fullname || !bio ||!nativeLanguage || !learningLanguage || !location){
+return res.status(400).json({success:false,
+  message:'All file are required',
+  missingField:[
+  !Fullname && 'fullname',
+  !bio && 'bio',
+  !nativeLanguage && 'nativeLanguage',
+  !learningLanguage && 'learningLanguage',
+  !location && 'location'
+].filter(Boolean) })
+  }
+  const UpdateUser = User.findByIdAndUpdate(
+    UserOne,
+    {
+      Fullname,
+      bio,
+      nativeLanguage,
+      learningLanguage,
+      location,
+      isOnboarded: true
+    },
+    { new: true }
+  );
+if(!UpdateUser) {
+  return res.status(404).json({ success: false, message: "User not found" }); 
+}
+  return res.status(200).json({ success: true, message: "Onboarding completed successfully", user: UpdateUser });
+} catch (error) {
+  console.error("Error during onboarding:", error);
+  return res.status(500).json({ success: false, message: "Internal server error" });
+}
+
+}
