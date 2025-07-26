@@ -165,7 +165,7 @@ try {
         status:'accepted'
     }).populate('receiver','Fullname bio ')
 
-    res.status(200).json({
+    return res.status(200).json({
         success: true,
         data: {
             IncomeRequest,
@@ -173,9 +173,25 @@ try {
         }
     });
 } catch (error) {
-    res.status(500).json({
+     return res.status(500).json({
         success: false,
         message: 'Internal Server Error'
     });
 }
+}
+export const getOutGoingReq=async(req,res)=>{
+
+    try {
+        const ReqOutGo=await Friends.find({
+            sender:req.userOne.id,
+            status:"pending"
+        }).populate("sender","Fullname profilepic nativelanguage learninglanguage ")
+
+        return res.status(200).json({success:true, ReqOutGo})
+    } catch (error) {
+       return res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        });
+    }
 }

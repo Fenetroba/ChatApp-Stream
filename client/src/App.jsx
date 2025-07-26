@@ -1,22 +1,29 @@
+import { Button } from "./components/ui/button"
+import {Route, Routes} from 'react-router-dom'
+import HomePage from "./page/HomePage"
+import Loginpage from "./page/Loginpage"
+import SignUp from "./page/SignUp"
 
-import { useEffect } from 'react'
-import './App.css'
-import io from 'socket.io-client'
-const socket=io.connect('http://localhost:5000/')
+import ChatPage from "./page/ChatPage"
+import Notification from "./page/Notification"
+import OnBoarding from "./page/OnBoarding"
+import CallPage from "./page/CallPage"
+
 function App() {
-  const click=()=>{
- socket.emit('send',{mess:"helow"})
-  }
 
-  useEffect(()=>{
-socket.on('receve',(data)=>{
-  alert(data.mess)
-})
 
-  },[socket])
   return (
     <>
-     <button onClick={click}> ok</button>
+    <Routes>
+      <Route path="/" element={<HomePage/>} />
+      <Route path="/login" element={<Loginpage />} />
+      <Route path="/signup" element={<SignUp/>} />
+      <Route path="/chat" element={<ChatPage/>} />
+      <Route path="/notification" element={<Notification/>} />
+      <Route path="/onboarding" element={<OnBoarding/>} />
+      <Route path="/call" element={<CallPage/>} />
+
+    </Routes>
     </>
   )
 }
