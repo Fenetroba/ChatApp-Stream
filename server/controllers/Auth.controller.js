@@ -1,4 +1,4 @@
-import User from "../models/Users.model.js";
+import User from "../models/Auth.model.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { upsertStreamUser } from "../lib/stream.js";
@@ -107,7 +107,7 @@ export const LogOut = async (req, res) => {
   }
 };
 
-export const Onboarding=(req,res)=>{
+export const Onboarding = async (req, res) => {
 
 try {
   const {Fullname,bio,nativeLanguage,learningLanguage,location}=req.body
@@ -123,8 +123,9 @@ return res.status(400).json({success:false,
   !location && 'location'
 ].filter(Boolean) })
   }
-  const UpdateUser = User.findByIdAndUpdate(
-    UserOne,
+
+  const UpdateUser = await User.findByIdAndUpdate(
+    req.UserOne._id,
     {
       Fullname,
       bio,
@@ -138,6 +139,17 @@ return res.status(400).json({success:false,
 if(!UpdateUser) {
   return res.status(404).json({ success: false, message: "User not found" }); 
 }
+try {
+  await upsertStreamUser({
+    id: UpdateUser._id.toString(),
+    name: UpdateUser.Fullname,
+    image: UpdateUser.profilePic,
+  });
+  console.log(`Stream user updated for ${UpdateUser.Fullname}`);
+} catch (error) {
+  console.log("Error updating Stream user:", error);
+}
+  // Return success response
   return res.status(200).json({ success: true, message: "Onboarding completed successfully", user: UpdateUser });
 } catch (error) {
   console.error("Error during onboarding:", error);
