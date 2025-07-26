@@ -8,9 +8,9 @@ import ChatPage from "./page/ChatPage"
 import Notification from "./page/Notification"
 import OnBoarding from "./page/OnBoarding"
 import CallPage from "./page/CallPage"
+import Switch from "./components/Switch"
 
 function App() {
-
 
   return (
     <>
@@ -24,6 +24,7 @@ function App() {
       <Route path="/call" element={<CallPage/>} />
 
     </Routes>
+   
     </>
   )
 }

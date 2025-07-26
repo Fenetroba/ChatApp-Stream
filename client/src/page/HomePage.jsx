@@ -1,8 +1,15 @@
+import Footer from '@/components/Footer'
+import Header from '@/components/Header'
+import Hero from '@/components/Hero'
 import React from 'react'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div>
+      <Header/>
+      <Hero/>
+      <Footer/>
+    </div>
   )
 }
 
