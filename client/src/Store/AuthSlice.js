@@ -18,6 +18,21 @@ export const register = createAsyncThunk(
        return rejectWithValue(error.response.data);
      }
   }) 
+export const  ONBoarding = createAsyncThunk(
+  '/onboarding',
+  async (userData, { rejectWithValue }) => {
+
+     try {
+       const response = await api.post('/auth/Onboarding', userData);
+       console.log("Onboarding response:", response.data);
+       return response.data;
+    
+     } catch (error) {
+       return rejectWithValue(error.response.data);
+     }
+  }) 
+
+
   export const LoginUser = createAsyncThunk(
   'auth/login',
   async (userData, { rejectWithValue }) => {
@@ -26,6 +41,17 @@ export const register = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+)
+  export const Me = createAsyncThunk(
+  'auth/me',
+   async (_, { rejectWithValue }) => {
+     try {
+       const response = await api.get('/auth/me');
+       return response.data;
+     } catch (error) {
+       return rejectWithValue(error.response.data);
     }
   }
 )
@@ -97,6 +123,40 @@ reducers: {
                     state.loading = false;
                     state.error = action.payload;
                })
+       // OnBoarding
+                .addCase(ONBoarding.pending, (state) => {
+                    state.loading = true;
+                    state.error = null;
+               })
+               .addCase(ONBoarding.fulfilled, (state) => {
+                     state.loading = false;
+                    state.user = action.payload;
+                    state.isAuthenticated = true;
+               })
+               .addCase(ONBoarding.rejected, (state, action) => {
+                    state.loading = false;
+                    state.error = action.payload;
+               })
+      //me
+       .addCase(Me.pending, (state) => {
+              state.loading = true;
+              state.error = null;
+            })
+            .addCase(Me.fulfilled, (state, action) => {
+              state.loading = false;
+              state.isAuthenticated = true;
+              state.user = action.payload.user;
+              state.error = null;
+            })
+            .addCase(Me.rejected, (state, action) => {
+              state.loading = false;
+              state.isAuthenticated = false;
+              state.user = null;
+              state.error = action.payload?.message || 'Not authenticated';
+            })
+                     
+             
+
      },
 });
 

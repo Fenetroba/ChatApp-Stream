@@ -10,18 +10,18 @@ export const Protect_router=async (req,res,next)=>{
           const Token=req.cookies.token;
 
           if(!Token){
-               return status(401).json({success:false,message:"unAuthorized User [Token not Provide"})
+               return res.status(401).json({success:false,message:"unAuthorized User [Token not Provide]"})
           }
      const decode=jwt.verify(Token , process.env.JWT_SECRET_KEY)
 
      if(!decode){
-          return status(401).json({success:false,message:"unAuthorized User [InValid Token]"})
+          return res.status(401).json({success:false,message:"unAuthorized User [InValid Token]"})
      }
 
      const Users=await User.findById(decode.userId).select("-password")
 
      if(!Users){
-          return status(401).json({success:false,message:"unAuthorized User [User Not Found]"})
+          return res.status(401).json({success:false,message:"unAuthorized User [User Not Found]"})
 
      }
      req.UserOne=Users

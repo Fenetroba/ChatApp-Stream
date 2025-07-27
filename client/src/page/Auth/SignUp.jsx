@@ -10,13 +10,16 @@ import { useDispatch,useSelector } from "react-redux";
 import { register } from "@/Store/AuthSlice";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = React.useState({
     Fullname: "",
     email: "",
     password: "",
   });
-  const SignUpHandler = async () => {
+  const SignUpHandler = async (e) => {
+    e.preventDefault();
+
 const result = await dispatch(register(userData));
     // Reset userData after registration
 
@@ -44,7 +47,8 @@ toast(result.payload?.message || "Registration attempted", {
     <section>
       <Header />
       <div className="magicpattern flex justify-evenly items-center">
-        <div className="flex flex-col space-y-6 shadow-lg w-[360px] p-10 [400px] bg-gradient-to-br from-[var(--three)] to-[var(--four)] rounded-2xl">
+        <form className="flex flex-col space-y-6 shadow-lg w-[360px] p-10 [400px] bg-gradient-to-br from-[var(--three)] to-[var(--four)] rounded-2xl"
+          onSubmit={SignUpHandler}>
           <h2 className="text-2xl font-bold text-white">Create an account</h2>
 
           <input
@@ -55,10 +59,11 @@ toast(result.payload?.message || "Registration attempted", {
             onChange={(e) =>
               setUserData({ ...userData, Fullname: e.target.value })
             }
+            
           />
 
           <input
-            type="text"
+            type="email"
             placeholder=" Email"
             className="p-1 rounded-[10px] bg-white bg-"
             value={userData.email}
@@ -76,7 +81,7 @@ toast(result.payload?.message || "Registration attempted", {
             }
           />
 
-          <Button className="bg-black rounded-[10px] text-white cursor-pointer hover:bg-gray-700" onClick={SignUpHandler}>
+          <Button className="bg-black rounded-[10px] text-white cursor-pointer hover:bg-gray-700" type="submit">
             Sign Up
           </Button>
           <Button className="bg-gray-200 rounded-[10px] text-black cursor-pointer hover:bg-gray-300">
@@ -88,7 +93,7 @@ toast(result.payload?.message || "Registration attempted", {
               <Link to="/login">Login</Link>
             </span>
           </p>
-        </div>
+        </form>
       </div>
     </section>
   );

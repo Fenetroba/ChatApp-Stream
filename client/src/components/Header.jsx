@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "./ui/button";
-import Switch from "./Switch";
+import Switch from "./Animation/Switch";
 import { Link } from "react-router-dom";
 
 const Header = () => {
