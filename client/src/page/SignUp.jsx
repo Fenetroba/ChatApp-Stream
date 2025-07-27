@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner"
+import { useNavigate } from "react-router-dom";
 import React from "react";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -15,13 +17,27 @@ const SignUp = () => {
     password: "",
   });
   const SignUpHandler = async () => {
-dispatch(register(userData));
+const result = await dispatch(register(userData));
     // Reset userData after registration
-    setUserData({
+
+
+    if (result.payload?.success || result.meta?.requestStatus === "fulfilled") {
+       setUserData({
       Fullname: "",
       email: "",
       password: "",
     });
+toast(result.payload?.message || "Registration attempted", {
+      style: { background: "#7fe635", color: "#fff" },
+    });
+      navigate("/onboarding");
+    }
+      else{
+          toast(result.payload?.message || "Registration attempted", {
+      style: { background: "#570808", color: "#fff" },
+    });
+      }
+  
 
   };  
   return (

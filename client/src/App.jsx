@@ -1,19 +1,21 @@
+
 import { Button } from "./components/ui/button"
 import {Route, Routes} from 'react-router-dom'
 import HomePage from "./page/HomePage"
 import Loginpage from "./page/Loginpage"
 import SignUp from "./page/SignUp"
+import { Toaster } from "./components/ui/sonner";
 
 import ChatPage from "./page/ChatPage"
 import Notification from "./page/Notification"
 import OnBoarding from "./page/OnBoarding"
 import CallPage from "./page/CallPage"
-import Switch from "./components/Switch"
 
 function App() {
 
   return (
-    <>
+    <div>
+ <Toaster />
     <Routes>
       <Route path="/" element={<HomePage/>} />
       <Route path="/login" element={<Loginpage />} />
@@ -25,7 +27,7 @@ function App() {
 
     </Routes>
    
-    </>
+    </div>
   )
 }
 
