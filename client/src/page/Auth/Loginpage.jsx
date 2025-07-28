@@ -12,6 +12,7 @@ import { toast } from "sonner"
 import Loading from '@/components/Animation/Loading'
 
 const Loginpage = () => {
+  console.lo
   const {loading}=useSelector((state) => state.auth);
  const [userData , setUserData]=useState({
   email:'',

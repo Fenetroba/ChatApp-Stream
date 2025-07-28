@@ -2,25 +2,65 @@ import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { ONBoarding } from "@/Store/AuthSlice";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
-const OnBoarding = () => {
+const OnBoarding = ({user ,isAuthenticated}) => {
+console.log("OnBoarding user:", user);
+console.log("OnBoarding isAuthenticated:", isAuthenticated);
+
+
+    
+
 const dispatch=useDispatch();
   const [onboarding,setOnboarding]=useState({
-    Fullname:"",
-    email:"",
-    Bio:"",
-    NativeLanguage:"",
-    LearningLanguage:"",
-    Location:""
+    Fullname:user.user.Fullname,
+    email:user.user.email,
+    bio:"",
+    nativeLanguage:"",
+    learningLanguage:"",
+    location:""
 
   })
-  const onboardingHandler = async (e) => {
-    e.preventDefault();
-    // Here you would typically send the onboarding data to your backend
-    console.log("Onboarding data submitted:", onboarding);
-    dispatch(ONBoarding(onboarding));
+ const onboardingHandler = async (e) => {
+  e.preventDefault();
+
+  const result = await dispatch(ONBoarding(onboarding));
+
+  console.log("Onboarding result:", result);
+
+  if (result.payload?.success || result.meta?.requestStatus === "fulfilled") {
+    setOnboarding({
+      Fullname: "",
+      email: "",
+      Bio: "",
+      NativeLanguage: "",
+      LearningLanguage: "",
+      Location: ""
+    });
+
+    toast(result.payload?.message || "Registration successful!", {
+      style: { background: "#7fe635", color: "#fff" },
+    });
+
+    navigate("/");
+  } else {
+    const errorMessage =
+      result.payload?.message ||
+      result.error?.message ||
+      "Something went wrong. Please try again.";
+
+    toast(errorMessage, {
+      style: { background: "#570808", color: "#fff" },
+    });
   }
+};
+
+
+  
+  
+
   return (
     <div className="magicpattern ">
       <Header />
@@ -36,15 +76,15 @@ const dispatch=useDispatch();
         <form className="bg-[var(--four)]/90 p-15 text-black flex flex-col space-y-4 rounded-2xl shadow-lg " onSubmit={onboardingHandler}>
           {/* <img src="" alt="" /> */}
           <div className="flex flex-col space-y-4">
-            Full Name   <input type="text" placeholder="Fullname" className="bg-white" value={onboarding.Fullname} onChange={(e) => setOnboarding({ ...onboarding, Fullname: e.target.value })} />
-            Email  <input type="email" placeholder="email" className="bg-white" value={onboarding.email} onChange={(e) => setOnboarding({ ...onboarding, email: e.target.value })} />
+            Full Name   <input type="text" placeholder={ user.user.Fullname}  className="bg-white" value={onboarding.Fullname} onChange={(e) => setOnboarding({ ...onboarding, Fullname: e.target.value })} />
+            Email  <input type="email" placeholder={ user.user.email}  className="bg-white" value={onboarding.email} onChange={(e) => setOnboarding({ ...onboarding, email: e.target.value })} />
           </div>
-          Bio <input type="text" placeholder="bio" className="bg-white" value={onboarding.Bio} onChange={(e) => setOnboarding({ ...onboarding, Bio: e.target.value })} />
+          Bio <input type="text" placeholder="bio" className="bg-white" value={onboarding.bio} onChange={(e) => setOnboarding({ ...onboarding, bio: e.target.value })} />
           <div>
-            Native Language <input type="text" placeholder="nativeLanguage" className="bg-white" value={onboarding.NativeLanguage} onChange={(e) => setOnboarding({ ...onboarding, NativeLanguage: e.target.value })} />
-            Learning Language <input type="text" placeholder="learningLanguage" className="bg-white" value={onboarding.LearningLanguage} onChange={(e) => setOnboarding({ ...onboarding, LearningLanguage: e.target.value })} />
+            Native Language <input type="text" placeholder="nativeLanguage" className="bg-white" value={onboarding.nativeLanguage} onChange={(e) => setOnboarding({ ...onboarding, nativeLanguage: e.target.value })} />
+            Learning Language <input type="text" placeholder="learningLanguage" className="bg-white" value={onboarding.learningLanguage} onChange={(e) => setOnboarding({ ...onboarding, learningLanguage: e.target.value })} />
           </div>
-          Location <input type="text" placeholder="location" className="bg-white" value={onboarding.Location} onChange={(e) => setOnboarding({ ...onboarding, Location: e.target.value })} />
+          Location <input type="text" placeholder="location" className="bg-white" value={onboarding.location} onChange={(e) => setOnboarding({ ...onboarding, location: e.target.value })} />
           <Button type="submit" className="bg-[var(--two)] text-white p-2 rounded-lg hover:bg-[var(--two2m)] transition-colors">
             Complete Onboarding
           </Button>

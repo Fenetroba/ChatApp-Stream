@@ -15,14 +15,14 @@ import { Me } from "./Store/AuthSlice"
 import { useDispatch, useSelector } from "react-redux"
 
 function App() {
-const {isAuthenticated, user} = useSelector((state) => state.auth);
+const {isAuthenticated ,user} = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(Me());
-    console.log("auth", isAuthenticated);
+   
   }, []);
-
+ console.log("auth", user);
    
 
   return (
@@ -30,11 +30,11 @@ const {isAuthenticated, user} = useSelector((state) => state.auth);
  <Toaster />
     <Routes>
       <Route path="/" element={<HomePage/>} />
-      <Route path="/login" element={<Loginpage />} />
+      <Route path="/login" element={<Loginpage user={user} isAuthenticated={isAuthenticated} />} />
       <Route path="/signup" element={<SignUp/>} />
       <Route path="/chat" element={<ChatPage/>} />
       <Route path="/notification" element={<Notification/>} />
-      <Route path="/onboarding" element={<OnBoarding/>} />
+      <Route path="/onboarding" element={<OnBoarding user={user} isAuthenticated={isAuthenticated} />} />
       <Route path="/call" element={<CallPage/>} />
 
     </Routes>

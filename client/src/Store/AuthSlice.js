@@ -18,19 +18,18 @@ export const register = createAsyncThunk(
        return rejectWithValue(error.response.data);
      }
   }) 
-export const  ONBoarding = createAsyncThunk(
-  '/onboarding',
+export const ONBoarding = createAsyncThunk(
+  'auth/onboarding',
   async (userData, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/auth/Onboarding', userData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
-     try {
-       const response = await api.post('/auth/Onboarding', userData);
-       console.log("Onboarding response:", response.data);
-       return response.data;
-    
-     } catch (error) {
-       return rejectWithValue(error.response.data);
-     }
-  }) 
 
 
   export const LoginUser = createAsyncThunk(
@@ -49,6 +48,7 @@ export const  ONBoarding = createAsyncThunk(
    async (_, { rejectWithValue }) => {
      try {
        const response = await api.get('/auth/me');
+        console.log("Me response:", response.data);
        return response.data;
      } catch (error) {
        return rejectWithValue(error.response.data);
@@ -124,19 +124,19 @@ reducers: {
                     state.error = action.payload;
                })
        // OnBoarding
-                .addCase(ONBoarding.pending, (state) => {
-                    state.loading = true;
-                    state.error = null;
-               })
-               .addCase(ONBoarding.fulfilled, (state) => {
-                     state.loading = false;
-                    state.user = action.payload;
-                    state.isAuthenticated = true;
-               })
-               .addCase(ONBoarding.rejected, (state, action) => {
-                    state.loading = false;
-                    state.error = action.payload;
-               })
+              .addCase(ONBoarding.pending, (state) => {
+              state.loading = true;
+              state.error = null;
+            })
+            .addCase(ONBoarding.fulfilled, (state, action) => {
+              state.loading = false;
+              state.user = action.payload; 
+            })
+            .addCase(ONBoarding.rejected, (state, action) => {
+              state.loading = false;
+              state.error = action.payload;
+            })
+
       //me
        .addCase(Me.pending, (state) => {
               state.loading = true;
