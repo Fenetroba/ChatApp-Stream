@@ -1,3 +1,4 @@
+import PageLoad from "@/components/Animation/PageLoad";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { ONBoarding } from "@/Store/AuthSlice";
@@ -6,21 +7,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-const OnBoarding = ({user ,isAuthenticated}) => {
-console.log("OnBoarding user:", user);
-console.log("OnBoarding isAuthenticated:", isAuthenticated);
-
-
-    
-
+const OnBoarding = ({user}) => {
+  
+  if (!user) {
+  return <div><PageLoad /></div>;
+}
+const navigate = useNavigate();
 const dispatch=useDispatch();
   const [onboarding,setOnboarding]=useState({
-    Fullname:user.user.Fullname,
-    email:user.user.email,
-    bio:"",
-    nativeLanguage:"",
-    learningLanguage:"",
-    location:""
+    Fullname:user.Fullname,
+    email: user.email,
+    bio:user.bio,
+    nativeLanguage:user.nativeLanguage,
+    learningLanguage:user.learningLanguage,
+    location:user.location
 
   })
  const onboardingHandler = async (e) => {
@@ -58,15 +58,13 @@ const dispatch=useDispatch();
 };
 
 
-  
-  
-
   return (
     <div className="magicpattern ">
       <Header />
       <h1 className="text-3xl font-bold text-center mt-10">
         Welcome to Onboarding
       </h1>
+
      
       <div className="flex justify-center mt-6">
       
@@ -76,8 +74,8 @@ const dispatch=useDispatch();
         <form className="bg-[var(--four)]/90 p-15 text-black flex flex-col space-y-4 rounded-2xl shadow-lg " onSubmit={onboardingHandler}>
           {/* <img src="" alt="" /> */}
           <div className="flex flex-col space-y-4">
-            Full Name   <input type="text" placeholder={ user.user.Fullname}  className="bg-white" value={onboarding.Fullname} onChange={(e) => setOnboarding({ ...onboarding, Fullname: e.target.value })} />
-            Email  <input type="email" placeholder={ user.user.email}  className="bg-white" value={onboarding.email} onChange={(e) => setOnboarding({ ...onboarding, email: e.target.value })} />
+            Full Name   <input type="text" placeholder=""  className="bg-white" value={onboarding.Fullname} onChange={(e) => setOnboarding({ ...onboarding, Fullname: e.target.value })} />
+            Email  <input type="email" placeholder=""  className="bg-white" value={onboarding.email} onChange={(e) => setOnboarding({ ...onboarding, email: e.target.value })} />
           </div>
           Bio <input type="text" placeholder="bio" className="bg-white" value={onboarding.bio} onChange={(e) => setOnboarding({ ...onboarding, bio: e.target.value })} />
           <div>

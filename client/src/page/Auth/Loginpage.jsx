@@ -11,8 +11,8 @@ import {} from 'react-router-dom'
 import { toast } from "sonner"
 import Loading from '@/components/Animation/Loading'
 
-const Loginpage = () => {
-  console.lo
+const Loginpage = ({user}) => {
+  console.log("Login user:", user);
   const {loading}=useSelector((state) => state.auth);
  const [userData , setUserData]=useState({
   email:'',
