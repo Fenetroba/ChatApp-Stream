@@ -8,12 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const OnBoarding = ({user}) => {
+  const navigate = useNavigate();
+  const dispatch=useDispatch();
   
   if (!user) {
   return <div><PageLoad /></div>;
 }
-const navigate = useNavigate();
-const dispatch=useDispatch();
   const [onboarding,setOnboarding]=useState({
     Fullname:user.Fullname,
     email: user.email,
@@ -28,7 +28,6 @@ const dispatch=useDispatch();
 
   const result = await dispatch(ONBoarding(onboarding));
 
-  console.log("Onboarding result:", result);
 
   if (result.payload?.success || result.meta?.requestStatus === "fulfilled") {
     setOnboarding({
@@ -60,7 +59,7 @@ const dispatch=useDispatch();
 
   return (
     <div className="magicpattern ">
-      <Header />
+   
       <h1 className="text-3xl font-bold text-center mt-10">
         Welcome to Onboarding
       </h1>

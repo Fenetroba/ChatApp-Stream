@@ -51,14 +51,24 @@
  --one:#f0f9ff;
   --two:#35b9fb;
   --three:#0b486f;
-  --four:#072d4a
+  --four:#072d4a;
+  --five:#020202;
 }
 
 .dark {
-   --one:#050505;
+   --one:#000000;
   --two:#7fe635;
-  --three:#e2fccb;
-  --four:#f2fee7
+  --three:#83eb28;
+  --four:#c3e4a4;
+  --five:#edf7e4;
+}
+
+.light {
+  --one:#f0f9ff;
+  --two:#35b9fb;
+  --three:#0b486f;
+  --four:#072d4a;
+   --five:#020202;
 }
 
 @layer base {

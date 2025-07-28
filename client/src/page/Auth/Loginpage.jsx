@@ -35,7 +35,7 @@ const navigate = useNavigate();
     toast(result.payload?.message || "Registration attempted", {
       style: { background: "#7fe635", color: "#fff" },
     });
-      navigate("/onboarding");
+      navigate("/");
     }   else{
           toast(result.payload?.message || "Registration attempted", {
       style: { background: "#570808", color: "#fff" },
