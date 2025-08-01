@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { LogoutUser } from "@/Store/AuthSlice";
@@ -7,9 +7,25 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// ...existing code...
+import { useEffect } from "react";
+// ...existing code...
+
 const Header = ({ auth, user, button }) => {
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Prevent background scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const LogoutHandler = () => {
     dispatch(LogoutUser());
@@ -27,27 +43,29 @@ const Header = ({ auth, user, button }) => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-4">
-          <Button className="px-6 text-[var(--one)] hover:bg-[var(--three)] shadow-lg">
-            <Link to="/onboarding">Join Us</Link>
-          </Button>
+          {!auth && (
+            <Button className="px-6 text-[var(--one)] hover:bg-[var(--three)] shadow-lg">
+              <Link to="/signup">Join Us</Link>
+            </Button>
+          )}
 
           {auth ? (
             <Button
-              className="rounded-2xl px-6 hover:bg-[var(--three)]"
+              className="rounded-2xl px-6 hover:bg-[var(--three)] border-2 cursor-pointer"
               onClick={LogoutHandler}
             >
               Logout
             </Button>
           ) : (
             <Link to="/login">
-              <Button className="rounded-2xl px-6 text-[var(--one)] hover:bg-[var(--three)]">
+              <Button className="rounded-2xl px-6 text-[var(--one)] hover:bg-[var(--three)] border-2">
                 Login
               </Button>
             </Link>
           )}
 
           {user && (
-            <Link to="/user/profile">
+            <Link to="/profile" className="flex items-center gap-2">
               <Avatar className="w-10 h-10">
                 <AvatarImage src={user.profilePic} />
                 <AvatarFallback>U</AvatarFallback>
@@ -64,7 +82,7 @@ const Header = ({ auth, user, button }) => {
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          {menuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+          {!menuOpen && <Menu className="w-7 h-7" />}
         </button>
       </div>
 
@@ -76,29 +94,28 @@ const Header = ({ auth, user, button }) => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed top-0 left-0 h-full w-full text-[var(--three)] bg-gradient-to-b from-[var(--one)] to-[var(--three)] z-50 flex flex-col p-6 md:hidden"
+            className="fixed top-0 left-0 h-full w-4/5 max-w-xs text-[var(--three)] bg-white z-50 flex flex-col p-6 md:hidden shadow-lg"
+            style={{ minWidth: "260px" }}
           >
-            
             <div className="flex justify-between items-center mb-6">
-                {button && <div className="ml-4">{button}</div>}
+              {button && <div className="ml-4">{button}</div>}
               <h2 className="text-xl text-[var(--three)] font-bold">Friend Chat</h2>
-              <button onClick={toggleMenu}>
+              <button onClick={toggleMenu} aria-label="Close menu">
                 <X className="w-6 h-6" />
               </button>
             </div>
 
             <Link
               to="/onboarding"
-              className="py-2 px-3 hover:text-[#62c022] border w-2/5 rounded-2xl mt-14 text-[17px] font-semibold"
+              className="py-2 px-3 hover:text-[#62c022] border w-full rounded-2xl text-[17px] font-semibold mb-2"
               onClick={toggleMenu}
             >
               Join Us
             </Link>
-            
 
             {auth ? (
               <Button
-                className="mt-4 bg-[var(--two2m)]  text-[var(--one)] rounded-2xl text-[16px] hover:bg-green-900"
+                className="mt-2 bg-[var(--two2m)] text-[var(--one)] rounded-2xl text-[16px] hover:bg-green-900 w-full"
                 onClick={() => {
                   LogoutHandler();
                   toggleMenu();
@@ -109,7 +126,7 @@ const Header = ({ auth, user, button }) => {
             ) : (
               <Link
                 to="/login"
-                className="mt-4 text-[16px]"
+                className="mt-2 text-[16px] w-full"
                 onClick={toggleMenu}
               >
                 <Button className="bg-[var(--two)] text-[var(--one)] hover:bg-green-900 w-full rounded-2xl">
@@ -119,8 +136,8 @@ const Header = ({ auth, user, button }) => {
             )}
 
             {user && (
-              <Link to="/user/profile" className="mt-4" onClick={toggleMenu}>
-                <Button className="bg-white text-black w-full flex justify-center items-center gap-2 shadow">
+              <Link to="/profile" className="mt-2" onClick={toggleMenu}>
+                <Button className="bg-white text-black w-full flex justify-center items-center gap-2 shadow rounded-2xl">
                   <User /> Profile
                 </Button>
               </Link>
@@ -129,13 +146,7 @@ const Header = ({ auth, user, button }) => {
         )}
       </AnimatePresence>
 
-      {/* Mobile Overlay */}
-      {menuOpen && (
-        <div
-          className="fixed inset-0 bg-black/30 z-40 md:hidden"
-          onClick={toggleMenu}
-        />
-      )}
+     
     </header>
   );
 };

@@ -4,26 +4,30 @@ import { Button } from "./ui/button";
 import { FaGoogle } from "react-icons/fa";
 const Hero = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-[var(--one)] relative">
-      <img
-        src={HeroImg}
-        alt="Hero"
-        className="w-[600px] sm:h-[87vh] h-2/3 rounded-l-full absolute right-0.5"
-      />
-      <div className=" ">
-        <div className="font-extrabold md:text-4xl lg:text-5xl text-[var(--four)] max-sm:top-[79%] text-3xl uppercase">
-          HI ! My <span className="text-[var(--three)]">Freind</span> Join Us
+    <div className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen bg-[var(--one)] relative overflow-hidden px-4">
+      {/* Text Section */}
+      <div className="z-10 flex flex-col items-center md:items-start w-full md:w-1/2 mt-8 md:mt-0">
+        <div className="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[var(--four)] uppercase text-center md:text-left">
+          HI ! My <span className="text-[var(--two)]">Friend</span> Join Us
         </div>
-        <p className="text-2xl text-[16px] w-[60%] text-center text-[var(--five)] max-sm:bg-[var(--one)] rounded-2xl max-sm:w-full m-8">
+        <p className="text-[16px] sm:text-lg md:text-xl w-full sm:w-4/5 md:w-full text-center md:text-left text-[var(--five)] bg-[var(--one)] rounded-2xl m-6 md:m-8">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi
           repellendus est expedita eligendi Commodi repellendus est expedita
           eligendi ,
         </p>
-        <div>
-          <Button className="sm:w-[40%] px-9.5 border-0  bg-[var(--two)] rounded-2xl mt-2 text-[18px] cursor-pointer hover:bg-[var(--three)]">
+        <div className="w-full flex justify-center md:justify-start">
+          <Button className="w-full sm:w-auto px-6 py-3 border-0 bg-[var(--two)] rounded-2xl mt-2 text-[18px] cursor-pointer hover:bg-[var(--three)] flex items-center justify-center gap-2">
             Continue With Google <FaGoogle />
           </Button>
         </div>
+      </div>
+      {/* Image Section */}
+      <div className="w-full md:w-1/2 flex justify-center md:justify-end mb-8 md:mb-0">
+        <img
+          src={HeroImg}
+          alt="Hero"
+          className="w-4/5 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl h-[400px] rounded-l-full shadow-lg object-cover"
+        />
       </div>
     </div>
   );

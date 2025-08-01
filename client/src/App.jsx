@@ -5,8 +5,6 @@ import HomePage from "./page/HomePage"
 import Loginpage from "./page/Auth/Loginpage"
 import SignUp from "./page/Auth/SignUp"
 import { Toaster } from "./components/ui/sonner";
-
-import ChatPage from "./page/ChatPage"
 import Notification from "./page/Notification"
 import OnBoarding from "./page/OnBoarding"
 import CallPage from "./page/CallPage"
@@ -14,6 +12,8 @@ import { useEffect, useState } from "react"
 import { Me } from "./Store/AuthSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { Moon, SunDim } from "lucide-react"
+import AppSidebar from "./page/AppSidebar"
+
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -41,13 +41,15 @@ const {isAuthenticated ,user} = useSelector((state) => state.auth);
     
       <Toaster />
     <Routes>
+      
       <Route path="/" element={<HomePage auth={isAuthenticated} user={user} button={button} />} />
       <Route path="/login" element={<Loginpage user={user} isAuthenticated={isAuthenticated} />} />
       <Route path="/signup" element={<SignUp/>} />
-      <Route path="/chat" element={<ChatPage/>} />
+      <Route path="/chat" element={<AppSidebar/>} />
       <Route path="/notification" element={<Notification/>} />
       <Route path="/onboarding" element={<OnBoarding user={user}/>} />
       <Route path="/call" element={<CallPage/>} />
+  
 
     </Routes>
    
