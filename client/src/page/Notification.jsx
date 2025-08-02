@@ -1,8 +1,11 @@
 import React from 'react'
+import ChatPage from './ChatPage'
 
 const Notification = () => {
   return (
-    <div>Notification</div>
+    <div>
+      <ChatPage/>
+    </div>
   )
 }
 

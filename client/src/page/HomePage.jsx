@@ -8,11 +8,11 @@ const HomePage = ({auth ,user, button}) => {
   return (
     <div>
 {!auth ?
-<>
+<div>
       <Header auth={auth} user={user} button={button} />
       <Hero/>
       <Footer/>
-</> : navigate("/onboarding")}
+</div> : navigate("/onboarding")}
     </div>
   )
 }

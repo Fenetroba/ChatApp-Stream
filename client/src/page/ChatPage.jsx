@@ -1,19 +1,40 @@
 import React from 'react'
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import  AppSidebar  from "@/page/AppSidebar.jsx"
-const ChatPage = () => {
+import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar"
+import App_Sidebar from './SideContents'
+import MainChat from '@/components/MainChat'
+import { useLocation } from 'react-router-dom'
+import Friends from './Friends'
+const ChatPage = ({button}) => {
+  const location=useLocation()
   return (
     <div>
-         <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        <div className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-2xl font-bold">Welcome to the Chat Page</h1>
-          <p className="text-gray-600">This is where you can chat with your friends!</p>
-        </div>
-      </main>
+
+
+
+<div className=" relative overflow-hidden">
+     <SidebarProvider>
+      <div className="flex-none">
+        <App_Sidebar button={button}/>
+      </div>
+          <SidebarTrigger className='bg-[var(--two)] cursor-pointer rounded-2xl'/>
+     
+   
+
+   
+      <div className="flex-1 sm:p-6 p-1">
+   
+                <MainChat/>
+             
+    
+        
+      </div>
     </SidebarProvider>
+    <div className='bg-[var(--three)] w-[550px] h-[550px]  shadow-2xl rounded-full absolute z-[-10] top-[-100px] right-[-100px]'></div>
+   
+
+   </div>
+
+
     </div>
   )
 }

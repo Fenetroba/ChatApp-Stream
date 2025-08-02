@@ -10,19 +10,19 @@ import { toast } from "sonner";
 const OnBoarding = ({user}) => {
   const navigate = useNavigate();
   const dispatch=useDispatch();
-  
-  if (!user) {
-  return <div><PageLoad /></div>;
-}
-  const [onboarding,setOnboarding]=useState({
-    Fullname:user.Fullname,
-    email: user.email,
-    bio:user.bio,
-    nativeLanguage:user.nativeLanguage,
-    learningLanguage:user.learningLanguage,
-    location:user.location
+ const [onboarding, setOnboarding] = useState({
+    Fullname: user?.Fullname || "",
+    email: user?.email || "",
+    bio: user?.bio || "",
+    nativeLanguage: user?.nativeLanguage || "",
+    learningLanguage: user?.learningLanguage || "",
+    location: user?.location || ""
+  });
 
-  })
+  if (!user) {
+    return <div><PageLoad /></div>;
+  }
+  
  const onboardingHandler = async (e) => {
   e.preventDefault();
 
