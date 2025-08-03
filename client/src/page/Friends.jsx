@@ -3,16 +3,19 @@ import { Plus } from "lucide-react";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CreateRequest from "@/components/CreateRequest";
+import { useSelector } from "react-redux";
 
 
 const Friends = () => {
-  const {friend ,isLoading}=user
+  const {myFriend ,isLoading}=useSelector(state=>state.friends)
+  const friends=myFriend.friends
+  console.log(myFriend)
   return (
     <div className="flex max-sm:flex-col sm:m-10 ">
  
 
       <div className="shadow-2xl w-full">
-        {friend.length === 0 ? (
+        {myFriend.length === 0 ? (
           <div className="text-center text-gray-500">
             <h2>No friend yet</h2>
             <p>
@@ -23,7 +26,7 @@ const Friends = () => {
           <div>
               <h2 className="text-center m-2 text-2xl font-bold">My Friends</h2>
             <div className="flex max-sm:flex-col  gap-2  items-center p-10">
-              {friend.map((myfriend) => (
+              {friends.map((myfriend) => (
                 <div key={myfriend.id} className="bg-[var(--one)] rounded-2xl text-[var(--five)] p-10">
                   <div className="flex gap-3 items-center">
                     <Avatar className='mb-4'>

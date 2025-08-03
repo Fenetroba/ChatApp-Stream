@@ -16,6 +16,7 @@ import AppSidebar from "./page/SideContents"
 import { SidebarProvider } from "./components/ui/sidebar"
 import ChatPage from "./page/ChatPage"
 import Friends from "./page/Friends"
+import { getRecommandedFriend, MyFriends } from "./Store/FriendSlice"
 
 
 function App() {
@@ -30,6 +31,8 @@ const {isAuthenticated ,user} = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(Me());
+    dispatch(getRecommandedFriend());
+    dispatch(MyFriends());
 
   }, [dispatch, isAuthenticated]);
 

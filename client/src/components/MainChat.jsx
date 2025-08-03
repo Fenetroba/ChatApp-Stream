@@ -1,10 +1,13 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const MainChat = () => {
+  const {user,isLoading}=useSelector(state=>state.auth)
+
+  console.log(user)
+  
   return (
- 
-      
-         <div className="flex flex-col max-sm:mt-10 max-sm:-ml-4 h-[80vh] max-h-[90vh]  max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+         <div className=" max-sm:un flex flex-col max-sm:mt-10 max-sm:-ml-4 h-[80vh] max-h-[90vh]  max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
            {/* Chat Header */}
            <div className="flex items-center justify-between px-6 py-4 bg-[var(--four)] text-white border-b">
              <div className="font-bold text-lg">Chat Room</div>
@@ -15,7 +18,7 @@ const MainChat = () => {
              {/* Example messages */}
              <div className="flex flex-col items-start">
                <div className="bg-[var(--two)] text-white px-4 py-2 rounded-2xl max-w-xs text-sm shadow">
-                 Hello! 👋 How can I help you today?
+               d
                </div>
                <span className="text-xs text-gray-400 mt-1">09:00 AM</span>
              </div>

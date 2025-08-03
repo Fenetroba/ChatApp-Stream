@@ -2,27 +2,30 @@ import User from "../models/Auth.model.js";
 import Friends from "../models/Friends.js";
 
 export const RecommendedUsers = async (req, res) => {
+  try {
+    const CurrentUserId = req.UserOne._id; // Use correct property
+    const user = req.UserOne;
+    // console.log(user);
 
+    const recommendedUsers = await User.find({
+      _id: { $ne: CurrentUserId, $nin: user.friends || [] }, // Corrected query
+      isOnboarded: false,
+    })
+      .select('-password -__v')
+      .limit(10);
 
-     try {
-         const CurrentUserId=req.Userone._id;
-         const user=req.UserOne;
-         const recommendedUsers = await User.find({
-             _id: { $ne: CurrentUserId },
-             $id: { $nin: user.friends },
-             isOnboarded: true,
-         }).select('-password -__v').limit(10);
-         res.status(200).json({
-             success: true,
-             recommendedUsers
-         });
-     } catch (error) {
-         res.status(500).json({
-             success: false,
-             message: 'Internal Server Error'
-         });
-     }
-}
+    res.status(200).json({
+      success: true,
+      recommendedUsers,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+    console.log(error.message);
+  }
+};
 export const FriendsList = async (req, res) => {
     try {
         const CurrentUserId = req.UserOne._id;
@@ -41,8 +44,9 @@ export const FriendsList = async (req, res) => {
 export const RequestFriend = async (req, res) => {
     try {
         const CurrentUserId = req.UserOne._id;
+ 
         const { friendId } = req.params;
-
+       console.log(friendId)
             // Validate the friendId
             if(CurrentUserId === friendId) {
                 return res.status(400).json({
@@ -105,18 +109,18 @@ export const RequestFriend = async (req, res) => {
     }
 }
 export const RequestFriend_accept = async (req, res) => {
-
     try {
         const CurrentUserId = req.UserOne._id;
         const { friendId } = req.params;
 
         // Validate the friendId
-        if(CurrentUserId === friendId) {
+        if (CurrentUserId.toString() === friendId) {
             return res.status(400).json({
                 success: false,
                 message: 'You cannot accept a friend request from yourself'
             });
         }
+
         // Check if the friend request exists
         const friendRequest = await Friends.findOne({
             $or: [
@@ -125,6 +129,7 @@ export const RequestFriend_accept = async (req, res) => {
             ],
             status: 'pending'
         });
+
         if (!friendRequest) {
             return res.status(404).json({
                 success: false,
@@ -145,12 +150,14 @@ export const RequestFriend_accept = async (req, res) => {
             message: 'Friend request accepted successfully'
         });
     } catch (error) {
+        console.error(error);
         res.status(500).json({
             success: false,
             message: 'Internal Server Error'
         });
     }
 }
+
 
 export const FriendsRequest=async (req, res) => {
 try {
