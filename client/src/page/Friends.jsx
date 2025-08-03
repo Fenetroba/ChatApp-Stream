@@ -4,6 +4,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CreateRequest from "@/components/CreateRequest";
 import { useSelector } from "react-redux";
+import TopeNav from "@/components/TopeNav";
 
 
 const Friends = () => {
@@ -11,7 +12,9 @@ const Friends = () => {
   const friends=myFriend.friends
   console.log(myFriend)
   return (
-    <div className="flex max-sm:flex-col sm:m-10 ">
+   <section>
+    <TopeNav/>
+     <div className="flex max-sm:flex-col sm:m-10 ">
  
 
       <div className="shadow-2xl w-full">
@@ -52,6 +55,7 @@ const Friends = () => {
       </div>
       
     </div>
+   </section>
   );
 };
 

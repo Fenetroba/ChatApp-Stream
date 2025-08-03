@@ -16,7 +16,9 @@ import AppSidebar from "./page/SideContents"
 import { SidebarProvider } from "./components/ui/sidebar"
 import ChatPage from "./page/ChatPage"
 import Friends from "./page/Friends"
+
 import { getRecommandedFriend, MyFriends } from "./Store/FriendSlice"
+import GetOutGoingReq from "./page/getOutGoingReq"
 
 
 function App() {
@@ -57,6 +59,7 @@ const {isAuthenticated ,user} = useSelector((state) => state.auth);
       <Route path="/notification" element={<Notification/>} />
       <Route path="/onboarding" element={<OnBoarding user={user}/>} />
       <Route path="/call" element={<CallPage/>} />
+      <Route path="/requests" element={<GetOutGoingReq/>} />
   
 
     </Routes>
