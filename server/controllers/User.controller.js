@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import User from "../models/Auth.model.js";
 import Friends from "../models/Friends.js";
 
@@ -102,10 +103,11 @@ export const RequestFriend_accept = async (req, res) => {
     const { requestId } = req.params;
 
     const friendRequest = await Friends.findOne({
-      _id: requestId,
+      _id: requestId,  // Fixed: using '_id' instead of 'id'
       receiver: CurrentUserId,
       status: 'pending',
     });
+    console.log('Friend request found:', friendRequest);
 
     if (!friendRequest) {
       return res.status(404).json({
@@ -129,9 +131,10 @@ export const RequestFriend_accept = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Friend request accepted successfully',
+      data: friendRequest
     });
   } catch (error) {
-    console.error(error);
+    console.error('Error accepting friend request:', error);
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',
@@ -182,3 +185,26 @@ export const getOutGoingReq = async (req, res) => {
     });
   }
 };
+export const UpDateProfile=async(req,res)=>{
+
+  try {
+    const {profilepic}=req.body;
+    const Userid=req.UserOne._id;
+    if(!profilepic){
+      return res.status(400).json({success:false,message:"profile image is required"})
+    }
+
+    const UploadImgToCloud=await cloudinary.uploader.upload(profilepic);
+
+    const UpdateUserProfile=await User.findByIdAndUpdate(Userid,{profilepic:UploadImgToCloud.secur_url},{new:true})
+
+    return res.status(200).json({success:true,UpdateUserProfile})
+  } catch (error) {
+    console.log(error.message)
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error'
+    });
+  }
+  
+}

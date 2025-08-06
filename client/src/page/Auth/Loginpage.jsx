@@ -1,72 +1,100 @@
+import Header from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { FaGoogle } from "react-icons/fa";
+import "../../App.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginUser } from "@/Store/AuthSlice";
+import {} from "react-router-dom";
+import { toast } from "sonner";
+import Loading from "@/components/Animation/Loading";
 
-import Header from '@/components/Header'
-import { Button } from '@/components/ui/button'
-import React, { useState } from 'react'
-import { FaGoogle } from 'react-icons/fa'
-import '../../App.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { LoginUser } from '@/Store/AuthSlice'
-import {} from 'react-router-dom'
-import { toast } from "sonner"
-import Loading from '@/components/Animation/Loading'
-
-const Loginpage = ({user}) => {
+const Loginpage = ({ user }) => {
   console.log("Login user:", user);
-  const {loading}=useSelector((state) => state.auth);
- const [userData , setUserData]=useState({
-  email:'',
-  password:''
- })
+  const { loading } = useSelector((state) => state.auth);
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
 
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const LoginHandler = async (e) => {
     e.preventDefault();
     const result = await dispatch(LoginUser(userData));
 
-
     if (result.payload?.success || result.meta?.requestStatus === "fulfilled") {
-       setUserData({
-      email: "",
-      password: "",
-    });
-    toast(result.payload?.message || "Registration attempted", {
-      style: { background: "#7fe635", color: "#fff" },
-    });
+      setUserData({
+        email: "",
+        password: "",
+      });
+      toast(result.payload?.message || "Registration attempted", {
+        style: { background: "#7fe635", color: "#fff" },
+      });
       navigate("/");
-    }   else{
-          toast(result.payload?.message || "Registration attempted", {
-      style: { background: "#570808", color: "#fff" },
-    });
-      }
-  
- }
-
+    } else {
+      toast(result.payload?.message || "Registration attempted", {
+        style: { background: "#570808", color: "#fff" },
+      });
+    }
+  };
 
   return (
-   <section>
+    <section>
+      <Header />
+      <div className="magicpattern  ">
+        <form
+          className="flex sm:h-[90vh] max-sm:h-[95vh] max-sm:w-full flex-col space-y-6 shadow-2xs w-[360px] p-10 bg-gradient-to-br from-[var(--three)] to-[var(--four)]"
+          onSubmit={LoginHandler}
+        >
+          <h2 className="text-2xl font-bold text-white">Login</h2>
 
-        <Header/>
-        <div className='magicpattern flex justify-evenly items-center'>
-          <form className='flex flex-col space-y-6 shadow-lg w-[360px] p-10 [400px] bg-gradient-to-br from-[var(--three)] to-[var(--four)] rounded-2xl'
-           onSubmit={LoginHandler}
+          <input
+            type="email"
+            placeholder="  Email"
+            required
+            className="p-1 rounded-[10px] bg-white "
+            value={userData.email}
+            onChange={(e) =>
+              setUserData({ ...userData, email: e.target.value })
+            }
+          />
+          <input
+            type="password"
+            placeholder=" Password"
+            className="p-1.5 rounded-[10px] bg-white bg-"
+            value={userData.password}
+            onChange={(e) =>
+              setUserData({ ...userData, password: e.target.value })
+            }
+          />
+          <p className="text-[var(--two)] text-sm">Forgot Password?</p>
+
+          <Button
+            className="bg-black rounded-[10px] text-white cursor-pointer hover:bg-gray-700"
+            type="submit"
           >
-                <h2 className='text-2xl font-bold text-white'>Login</h2>
-
-            <input type="email"  placeholder='  Email' required className='p-1 rounded-[10px] bg-white ' value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
-            <input type="password" placeholder=' Password' className='p-1.5 rounded-[10px] bg-white bg-' value={userData.password} onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
-            <p className='text-[var(--two)] text-sm'>Forgot Password?</p>
-
-            <Button className='bg-black rounded-[10px] text-white cursor-pointer hover:bg-gray-700'  type="submit">{loading ? <Loading/> : "Login"}</Button>
-            <Button className='bg-gray-200 rounded-[10px] text-black cursor-pointer hover:bg-gray-300'>Continue With Google <FaGoogle/></Button>
-            <p className='text-white'>Don't have an account? <span className='text-[var(--two)] cursor-pointer'><Link to='/signup'>Sign Up</Link></span></p>
-          </form>
+            {loading ? <Loading /> : "Login"}
+          </Button>
+          <Button className="bg-gray-200 rounded-[10px] text-black cursor-pointer hover:bg-gray-300">
+            Continue With Google <FaGoogle />
+          </Button>
+          <p className="text-white">
+            Don't have an account?{" "}
+            <span className="text-[var(--two)] cursor-pointer">
+              <Link to="/signup">Sign Up</Link>
+            </span>
+          </p>
+        </form>
+        <div className="text-white bg-black px-4.5 shadow-2xl  absolute bottom-6 right-10">
+          {" "}
+          Built by @FENARO
         </div>
+      </div>
+    </section>
+  );
+};
 
-      </section>
-  )
-}
-
-export default Loginpage
+export default Loginpage;

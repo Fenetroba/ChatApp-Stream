@@ -1,12 +1,12 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "@/Store/AuthSlice";
 
 const SignUp = () => {
@@ -20,35 +20,33 @@ const SignUp = () => {
   const SignUpHandler = async (e) => {
     e.preventDefault();
 
-const result = await dispatch(register(userData));
+    const result = await dispatch(register(userData));
     // Reset userData after registration
 
-
     if (result.payload?.success || result.meta?.requestStatus === "fulfilled") {
-       setUserData({
-      Fullname: "",
-      email: "",
-      password: "",
-    });
-toast(result.payload?.message || "Registration attempted", {
-      style: { background: "#7fe635", color: "#fff" },
-    });
+      setUserData({
+        Fullname: "",
+        email: "",
+        password: "",
+      });
+      toast(result.payload?.message || "Registration attempted", {
+        style: { background: "#7fe635", color: "#fff" },
+      });
       navigate("/onboarding");
+    } else {
+      toast(result.payload?.message || "Registration attempted", {
+        style: { background: "#570808", color: "#fff" },
+      });
     }
-      else{
-          toast(result.payload?.message || "Registration attempted", {
-      style: { background: "#570808", color: "#fff" },
-    });
-      }
-  
-
-  };  
+  };
   return (
     <section>
       <Header />
-      <div className="magicpattern flex justify-evenly items-center">
-        <form className="flex flex-col space-y-6 shadow-lg w-[360px] p-10 [400px] bg-gradient-to-br from-[var(--three)] to-[var(--four)] rounded-2xl"
-          onSubmit={SignUpHandler}>
+      <div className="magicpattern flex ">
+        <form
+          className="max-sm:h-[95vh] sm:h-[90vh] max-sm:w-full  flex flex-col shadow-2xs  space-y-6  w-[360px] p-10 [400px] bg-gradient-to-br from-[var(--three)] to-[var(--four)] "
+          onSubmit={SignUpHandler}
+        >
           <h2 className="text-2xl font-bold text-white">Create an account</h2>
 
           <input
@@ -59,7 +57,6 @@ toast(result.payload?.message || "Registration attempted", {
             onChange={(e) =>
               setUserData({ ...userData, Fullname: e.target.value })
             }
-            
           />
 
           <input
@@ -81,19 +78,23 @@ toast(result.payload?.message || "Registration attempted", {
             }
           />
 
-          <Button className="bg-black rounded-[10px] text-white cursor-pointer hover:bg-gray-700" type="submit">
+          <Button
+            className="bg-black rounded-[10px] text-white cursor-pointer hover:bg-gray-700"
+            type="submit"
+          >
             Sign Up
           </Button>
           <Button className="bg-gray-200 rounded-[10px] text-black cursor-pointer hover:bg-gray-300">
             Continue With Google <FaGoogle />
           </Button>
           <p className="text-white">
-            Don't have an account?{" "}
+            I have an account?{" "}
             <span className="text-[var(--two)] cursor-pointer">
               <Link to="/login">Login</Link>
             </span>
           </p>
         </form>
+      <div className="text-white bg-black px-4.5 shadow-2xl  absolute bottom-6 right-10">  Built by @FENARO</div>
       </div>
     </section>
   );

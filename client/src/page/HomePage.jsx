@@ -12,7 +12,7 @@ const HomePage = ({auth ,user, button}) => {
       <Header auth={auth} user={user} button={button} />
       <Hero/>
       <Footer/>
-</div> : navigate("/onboarding")}
+</div> : navigate("/chat")}
     </div>
   )
 }

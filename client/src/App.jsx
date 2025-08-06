@@ -19,6 +19,8 @@ import Friends from "./page/Friends"
 
 import { getRecommandedFriend, MyFriends } from "./Store/FriendSlice"
 import GetOutGoingReq from "./page/getOutGoingReq"
+import PageLoad from "./components/Animation/PageLoad"
+import Setting from "./page/Setting"
 
 
 function App() {
@@ -30,6 +32,7 @@ function App() {
   
 const {isAuthenticated ,user} = useSelector((state) => state.auth);
 
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(Me());
@@ -37,7 +40,10 @@ const {isAuthenticated ,user} = useSelector((state) => state.auth);
     dispatch(MyFriends());
 
   }, [dispatch, isAuthenticated]);
-
+  if(!user){
+    <div><PageLoad/></div>
+    
+  }
     
        const button= <Button onClick={toggleDarkMode} className="border-1 bg-[var(--three)] cursor-pointer text-white hover:bg-[var(--two)] rounded-full">
           {darkMode ? <SunDim /> : <Moon />}
@@ -54,12 +60,13 @@ const {isAuthenticated ,user} = useSelector((state) => state.auth);
       <Route path="/" element={<HomePage auth={isAuthenticated} user={user} button={button} />} />
       <Route path="/login" element={<Loginpage user={user} isAuthenticated={isAuthenticated} />} />
       <Route path="/signup" element={<SignUp/>} />
-      <Route path="/chat" element={<ChatPage button={button}/>} />
+      <Route path="/chat" element={<ChatPage user={user} button={button}/>} />
       <Route path="/friends" element={<Friends />} />
       <Route path="/notification" element={<Notification/>} />
       <Route path="/onboarding" element={<OnBoarding user={user}/>} />
       <Route path="/call" element={<CallPage/>} />
       <Route path="/requests" element={<GetOutGoingReq/>} />
+      <Route path="/Setting" element={<Setting/>} />
   
 
     </Routes>

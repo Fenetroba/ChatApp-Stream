@@ -4,14 +4,14 @@ import App_Sidebar from "./SideContents";
 import MainChat from "@/components/MainChat";
 import { useLocation } from "react-router-dom";
 import Friends from "./Friends";
-const ChatPage = ({ button }) => {
+const ChatPage = ({ button,user }) => {
   const location = useLocation();
   return (
     <div>
       <div className=" relative overflow-hidden">
         <SidebarProvider>
           <div className="flex-none">
-            <App_Sidebar button={button} />
+            <App_Sidebar user={user}  button={button} />
           </div>
           <SidebarTrigger className="bg-[var(--two)] cursor-pointer rounded-2xl" />
 
@@ -19,7 +19,7 @@ const ChatPage = ({ button }) => {
             <MainChat />
           </div>
         </SidebarProvider>
-        <div className="bg-[var(--three)] w-[550px] h-[550px]  shadow-2xl rounded-full absolute z-[-10] top-[-100px] right-[-100px]"></div>
+        <div className="bg-[var(--four)] w-[550px] h-[550px]  shadow-2xl rounded-full absolute z-[-10] top-[-100px] right-[-100px]"></div>
       </div>
     </div>
   );

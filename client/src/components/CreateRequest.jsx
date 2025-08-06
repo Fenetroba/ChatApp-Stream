@@ -4,20 +4,36 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { SendRequest } from "@/Store/FriendSlice";
+import { toast } from "sonner";
 
 const CreateRequest = () => {
   const { recommendedUsers } = useSelector(state => state.friends);
   const recommendedUser = recommendedUsers.recommendedUsers || [];
   const dispatch=useDispatch()
 const RequestHandler=(UserId)=>{
-dispatch(SendRequest(UserId))
+dispatch(SendRequest(UserId)).then((result) => {
+  console.log('RequestAccept result:', result);
+  if (result.payload?.success) {
+    toast.success("Request sended successfully!", {
+      style: { background: "#7fe635", color: "#fff" },
+    });
+    // Refresh the requests
+    dispatch(GetOutGoingRequest());
+    dispatch(IncomeFriendsRequest());
+  } else {
+    toast.error(result.payload?.message || "Failed to accept request", {
+      style: { background: "#570808", color: "#fff" },
+    });
+  }
+});
+};
 
-}
+
   return (
-    <div className="flex max-sm:flex-col sm:m-10 ">
+    <div className="flex max-sm:flex-col  backdrop-blur-lg ">
       <div className="shadow-2xl w-full">
         <div>
-          <h2 className="text-center m-2 text-2xl font-bold">
+          <h2 className="text-center  text-2xl font-bold m-7 p-2 rounded-2xl shadow-2xl backdrop-blur-3xl bg-white">
             Meet New Friends
           </h2>
           <div className="flex max-sm:flex-col gap-2 items-center p-10">
