@@ -7,9 +7,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ...existing code...
+
 import { useEffect } from "react";
-// ...existing code...
+
 
 const Header = ({ auth, user, button }) => {
   const dispatch = useDispatch();
