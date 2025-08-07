@@ -59,7 +59,6 @@ export const MessageSlice = createSlice({
          })
          .addCase(SendMessages.pending, (state) => {
           state.lodading = true;
-          state.message = [];
           state.error = null;
         })
         .addCase(SendMessages.fulfilled, (state, action) => {

@@ -2,7 +2,9 @@ import React from "react";
 import HeroImg from "../assets/hero.jpg";
 import { Button } from "./ui/button";
 import { FaGoogle } from "react-icons/fa";
-const Hero = () => {
+import { ChartAreaIcon, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+const Hero = ({isAuth}) => {
   return (
     <div className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen bg-[var(--one)] relative overflow-hidden px-4">
       {/* Text Section */}
@@ -16,9 +18,19 @@ const Hero = () => {
           eligendi ,
         </p>
         <div className="w-full flex justify-center md:justify-start">
-          <Button className="w-full sm:w-auto px-6 py-3 border-0 bg-[var(--two)] rounded-2xl mt-2 text-[18px] cursor-pointer hover:bg-[var(--three)] flex items-center justify-center gap-2">
-            Continue With Google <FaGoogle />
+      {
+        isAuth ? (
+        <Link to='/chat' className="w-full">
+            <Button className="w-full px-27 py-3 border-0 bg-[var(--four)]  text-white rounded-2xl mt-2 text-[18px] cursor-pointer hover:bg-[var(--three)] flex items-center justify-center gap-2">
+           I Want To Chat <MessageCircle/>
           </Button>
+        </Link>
+        ) : (
+          <Button className="w-full sm:w-auto px-6 py-3 border-0 bg-[var(--two)] rounded-2xl mt-2 text-[18px] cursor-pointer hover:bg-[var(--three)] flex items-center justify-center gap-2">
+            Continue With Google  <FaGoogle />
+          </Button>
+        )
+      }
         </div>
       </div>
       {/* Image Section */}

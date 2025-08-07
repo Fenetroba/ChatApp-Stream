@@ -29,7 +29,7 @@ import { useEffect } from "react";
 const items = [
   {
     title: "Home",
-    url: "/chat",
+    url: "/",
     icon: Home,
   },
   {

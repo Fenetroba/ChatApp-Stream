@@ -7,12 +7,11 @@ const HomePage = ({auth ,user, button}) => {
    const navigate = useNavigate();
   return (
     <div>
-{!auth ?
-<div>
+
       <Header auth={auth} user={user} button={button} />
-      <Hero/>
+      <Hero isAuth={auth}/>
       <Footer/>
-</div> : navigate("/chat")}
+
     </div>
   )
 }

@@ -8,6 +8,7 @@ import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "@/Store/AuthSlice";
+import SiderImg from "../../assets/hero.jpg";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -41,8 +42,13 @@ const SignUp = () => {
   };
   return (
     <section>
+      <img
+        src={SiderImg}
+        alt="SiderImg"
+        className="absolute top-0 left-0 w-full h-full object-cover backdrop-blur-lg  blur- z-0"
+      />
       <Header />
-      <div className="magicpattern flex ">
+      <div className="relative z-10  magicpattern  ">
         <form
           className="max-sm:h-[95vh] sm:h-[90vh] max-sm:w-full  flex flex-col shadow-2xs  space-y-6  w-[360px] p-10 [400px] bg-gradient-to-br from-[var(--three)] to-[var(--four)] "
           onSubmit={SignUpHandler}
@@ -94,7 +100,10 @@ const SignUp = () => {
             </span>
           </p>
         </form>
-      <div className="text-white bg-black px-4.5 shadow-2xl  absolute bottom-6 right-10">  Built by @FENARO</div>
+        <div className="text-white bg-black px-4.5 shadow-2xl  absolute bottom-6 right-10">
+          {" "}
+          Built by @FENARO
+        </div>
       </div>
     </section>
   );

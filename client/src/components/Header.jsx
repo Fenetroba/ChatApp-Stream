@@ -65,7 +65,7 @@ const Header = ({ auth, user, button }) => {
           )}
 
           {user && (
-            <Link to="/profile" className="flex items-center gap-2">
+            <Link to="/Setting" className="flex items-center gap-2">
               <Avatar className="w-10 h-10">
                 <AvatarImage src={user.profilePic} />
                 <AvatarFallback>U</AvatarFallback>

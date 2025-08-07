@@ -48,7 +48,7 @@ export const ONBoarding = createAsyncThunk(
    async (_, { rejectWithValue }) => {
      try {
        const response = await api.get('/auth/me');
-        console.log("Me response:", response.data);
+
        return response.data;
      } catch (error) {
        return rejectWithValue(error.response.data);

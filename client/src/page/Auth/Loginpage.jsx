@@ -9,6 +9,8 @@ import { LoginUser } from "@/Store/AuthSlice";
 import {} from "react-router-dom";
 import { toast } from "sonner";
 import Loading from "@/components/Animation/Loading";
+import SiderImg from "../../assets/hero.jpg";
+
 
 const Loginpage = ({ user }) => {
   console.log("Login user:", user);
@@ -43,8 +45,13 @@ const Loginpage = ({ user }) => {
 
   return (
     <section>
+       <img
+              src={SiderImg}
+              alt="SiderImg"
+              className="absolute top-0 left-0 w-full h-full object-cover backdrop-blur-lg  blur- z-0"
+            />
       <Header />
-      <div className="magicpattern  ">
+      <div className="relative z-10 magicpattern  ">
         <form
           className="flex sm:h-[90vh] max-sm:h-[95vh] max-sm:w-full flex-col space-y-6 shadow-2xs w-[360px] p-10 bg-gradient-to-br from-[var(--three)] to-[var(--four)]"
           onSubmit={LoginHandler}

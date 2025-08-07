@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Send, Paperclip, Smile, MoreVertical } from 'lucide-react'
 import PageLoad from './Animation/PageLoad';
 import { SendMessages, GetMessages } from '@/Store/MessageSlice';
-
+import friends from '../assets/friends.png'
 const MainChat = () => {
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector(state => state.auth)
@@ -25,13 +25,9 @@ const chatFriend = selectedFriendId
   : (ChatMessages.length > 0
       ? chatUser.find(friend => friend._id === (ChatMessages[0].senderId === user._id ? ChatMessages[0].receiverId : ChatMessages[0].senderId))
       : chatUser.find(friend => friend._id===user._id));
-      console.log('chatFriend', chatFriend)
-      console.log('chatUser', chatUser)
-      console.log('ChatMessages', ChatMessages)
+     
 
-console.log('chatUser', chatUser);
-console.log('chatFriend', chatFriend);
-console.log('ChatMessages', ChatMessages);
+
 
   // Auto scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -52,8 +48,8 @@ console.log('ChatMessages', ChatMessages);
     if (!newMessage.trim()) return;
     setSendLoading(true);
     try {
-       dispatch(SendMessages({ receiverId: chatFriend._id, data: { senderId: user._id, text: newMessage } }));
-       dispatch(GetMessages(chatFriend._id));
+      await dispatch(SendMessages({ receiverId: chatFriend._id, data: { senderId: user._id, text: newMessage } }));
+      await dispatch(GetMessages(chatFriend._id));
       setNewMessage('');
       setIsTyping(false);
     } catch (err) {
@@ -101,7 +97,7 @@ console.log('ChatMessages', ChatMessages);
       </div>
 
       {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 space-y-4">
+      <div className="flex-1 overflow-y-auto px-4 py-3 bg-gradient-to-br magicpattern space-y-4">
         {/* Render messages from Redux store */}
         {ChatMessages.length > 0 ? (
           ChatMessages.map((msg, idx) => {
@@ -133,7 +129,8 @@ console.log('ChatMessages', ChatMessages);
           })
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-gray-400 text-lg">
-            No messages yet.
+            <img src={friends} alt="friends" className='w-100'/>
+            <p className="bg-black text-white px-5">No Message Yet</p>
           </div>
         )}
 

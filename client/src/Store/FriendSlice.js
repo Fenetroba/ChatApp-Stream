@@ -16,11 +16,10 @@ export const getRecommandedFriend = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get('/user/recommended-users');
-      console.log(response.data);
       return response.data;
 
     } catch (error) {
-      console.log(error?.response?.data);
+
       return rejectWithValue(error?.response?.data || "Error fetching friends");
     }
   }
@@ -32,7 +31,7 @@ export const SendRequest = createAsyncThunk(
       const response = await api.post(`/user/friends-request/${FriendId}`);
       return response.data;
     } catch (error) {
-      console.log(error?.response?.data);
+
       return rejectWithValue(error?.response?.data || "Error SendRequest friends");
     }
   }
@@ -44,29 +43,29 @@ export const MyFriends=createAsyncThunk('/user/friends-list',async(_,{rejectWith
     return response.data;
 
   } catch (error) {
-         console.log(error?.response?.data);
+       
       return rejectWithValue(error?.response?.data || "Error fetching friends");
   }
 })
 export const GetOutGoingRequest=createAsyncThunk('/user/getOutgoingReq',async(_,{rejectWithValue})=>{
   try {
     const response =await api.get('/user/getOutgoingReq')
-    console.log('GetOutGoingRequest response:', response.data);
+
     // The backend returns { success: true, ReqOutGo }
     return response.data.ReqOutGo || response.data;
   } catch (error) {
-      console.log(error?.response?.data);
+    
       return rejectWithValue(error?.response?.data || "Error in getOutGoingRequest");
   }
 })
 export const IncomeFriendsRequest=createAsyncThunk('/user/friends-request',async(_,{rejectWithValue})=>{
   try {
     const response =await api.get('/user/friends-request')
-    console.log('IncomeFriendsRequest response:', response.data);
+ 
     // The backend returns { success: true, data: { IncomeRequest, acceptedReq } }
     return response.data.data?.IncomeRequest || response.data.IncomeRequest || [];
   } catch (error) {
-      console.log(error?.response?.data);
+ 
       return rejectWithValue(error?.response?.data || "Error in getRecommandedFriend friends");
   }
 })
@@ -75,12 +74,12 @@ export const IncomeFriendsRequest=createAsyncThunk('/user/friends-request',async
   'friends/requestAccept',
   async (requestId, { rejectWithValue }) => {
     try {
-      console.log('Accepting friend request with ID:', requestId);
+   
       const response = await api.put(`/user/friends-request/${requestId}/accept`);
-      console.log('Request accept response:', response.data);
+
       return response.data;
     } catch (error) {
-      console.log('Request accept error:', error?.response?.data);
+  
       return rejectWithValue(error?.response?.data || "Error accepting friend request");
     }
   }

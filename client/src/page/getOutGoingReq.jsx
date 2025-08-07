@@ -42,11 +42,7 @@ const GetOutGoingReq = () => {
   };
 
   const statusHandler = (requestId) => {
-    console.log('=== ACCEPTING FRIEND REQUEST ===');
-    console.log('Request ID being sent:', requestId);
-    console.log('Request ID type:', typeof requestId);
-    console.log('Current tab:', IsInOrOut);
-    console.log('IncomeRequest data:', IncomeRequest);
+   
     
     dispatch(RequestAccept(requestId)).then((result) => {
       console.log('RequestAccept result:', result);
