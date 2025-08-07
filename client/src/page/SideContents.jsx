@@ -63,8 +63,8 @@ function App_Sidebar({ button, user }) {
   const dispatch=useDispatch()
   const chatHandler=(userId)=>{
       console.log(userId)
-    dispatch(GetMessages(userId))
-    
+      dispatch(GetMessages(userId))
+      dispatch({ type: 'friends/setSelectedFriendId', payload: userId })
     }
 
     useEffect(() => {

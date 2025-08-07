@@ -10,7 +10,7 @@ export const GetMessages=createAsyncThunk('/getmessage',async(receiverId,{reject
 try {
      const response=await api.get(`/chat/${receiverId}`)
      return response.data;
-
+    
 } catch (error) {
     console.log(error?.response?.data);
       return rejectWithValue(error?.response?.data || "Error fetching friends");   

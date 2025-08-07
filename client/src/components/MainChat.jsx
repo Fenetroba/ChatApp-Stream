@@ -17,11 +17,17 @@ const MainChat = () => {
   const {myFriend}=useSelector(state=>state.friends)
   const ChatMessages = Array.isArray(message?.FindMyMessage) ? message.FindMyMessage : [];
   const chatUser = Array.isArray(myFriend?.friends) ? myFriend.friends : [];
+  const selectedFriendId = useSelector(state => state.friends.selectedFriendId);
 
-// Find the friend in this chat (either sender or receiver, but not current user)
-const chatFriend = ChatMessages.length > 0
-  ? chatUser.find(friend => friend._id === (ChatMessages[0].senderId === user._id ? ChatMessages[0].receiverId : ChatMessages[0].senderId))
-  : null;
+// Always select chatFriend from selectedFriendId if available
+const chatFriend = selectedFriendId
+  ? chatUser.find(friend => friend._id === selectedFriendId)
+  : (ChatMessages.length > 0
+      ? chatUser.find(friend => friend._id === (ChatMessages[0].senderId === user._id ? ChatMessages[0].receiverId : ChatMessages[0].senderId))
+      : chatUser.find(friend => friend._id===user._id));
+      console.log('chatFriend', chatFriend)
+      console.log('chatUser', chatUser)
+      console.log('ChatMessages', ChatMessages)
 
 console.log('chatUser', chatUser);
 console.log('chatFriend', chatFriend);
@@ -46,8 +52,8 @@ console.log('ChatMessages', ChatMessages);
     if (!newMessage.trim()) return;
     setSendLoading(true);
     try {
-      await dispatch(SendMessages({ receiverId: chatFriend._id, data: { senderId: user._id, text: newMessage } }));
-      await dispatch(GetMessages(chatFriend._id));
+       dispatch(SendMessages({ receiverId: chatFriend._id, data: { senderId: user._id, text: newMessage } }));
+       dispatch(GetMessages(chatFriend._id));
       setNewMessage('');
       setIsTyping(false);
     } catch (err) {

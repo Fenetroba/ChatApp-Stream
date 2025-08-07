@@ -8,6 +8,7 @@ const initialState = {
   IncomeRequest:[],
   isLoading: false,
   error: null,
+  selectedFriendId: null,
 };
 
 export const getRecommandedFriend = createAsyncThunk(
@@ -88,6 +89,9 @@ export const friendSlice = createSlice({
   name: 'friends',
   initialState,
   reducers: {
+    setSelectedFriendId: (state, action) => {
+      state.selectedFriendId = action.payload;
+    },
     clearError: (state) => {
       state.error = null;
     },
