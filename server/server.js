@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 // Configure CORS options if needed
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your client's origin
+  origin: 'https://chatapp-stream.onrender.com/', // Replace with your client's origin
   credentials: true,
 }));
 app.use('/api/auth', AuthRoutes);
