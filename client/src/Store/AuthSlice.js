@@ -23,14 +23,24 @@ export const ONBoarding = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post('/auth/Onboarding', userData);
+      
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
-
-
+export const UpdateProfile = createAsyncThunk(
+  'user/UpdateProfile',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await api.put('/user/UpdateProfile', userData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
   export const LoginUser = createAsyncThunk(
   'auth/login',
@@ -139,7 +149,7 @@ reducers: {
 
       //me
        .addCase(Me.pending, (state) => {
-              state.loading = true;
+              // state.loading = true;
               state.error = null;
             })
             .addCase(Me.fulfilled, (state, action) => {
@@ -154,7 +164,19 @@ reducers: {
               state.user = null;
               state.error = action.payload?.message || 'Not authenticated';
             })
-                     
+            //UpdateProfile
+            .addCase(UpdateProfile.pending, (state) => {
+              state.loading = true;
+              state.error = null;
+            })
+            .addCase(UpdateProfile.fulfilled, (state, action) => {
+              state.loading = false;
+              state.user = action.payload.UpdateUserProfile || action.payload.user || action.payload;
+            })
+            .addCase(UpdateProfile.rejected, (state, action) => {
+              state.loading = false;
+              state.error = action.payload;
+            })     
              
 
      },

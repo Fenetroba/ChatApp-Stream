@@ -16,7 +16,7 @@ const ChatPage = ({ button,user }) => {
           <SidebarTrigger className="bg-[var(--two)] cursor-pointer rounded-2xl" />
 
           <div className="flex-1 sm:p-6 p-1 ">
-            <MainChat />
+            <MainChat user={user} />
           </div>
         </SidebarProvider>
         <div className="bg-[var(--four)] w-[550px] h-[550px]  shadow-2xl rounded-full absolute z-[-10] top-[-100px] right-[-100px]"></div>

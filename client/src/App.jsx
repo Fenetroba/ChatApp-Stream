@@ -29,7 +29,7 @@ function App() {
     setDarkMode(!darkMode);
   };
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user,loading } = useSelector((state) => state.auth);
   console.log(isAuthenticated)
   if (!user) {
     <div>
@@ -120,7 +120,7 @@ function App() {
           path="/Setting"
           element={
             <ProtectedRoute user={user}>
-              <Setting />
+              <Setting user={user} />
             </ProtectedRoute>
           }
         />

@@ -114,7 +114,7 @@ const GetOutGoingReq = () => {
                         {/* Profile Avatar */}
 
                         <Avatar className="border-1">
-                          <AvatarImage src={request.profilePic} />
+                          <AvatarImage src={request.receiver?.profilePic} />
                           <AvatarFallback>
                           U
                           </AvatarFallback>

@@ -44,7 +44,7 @@ const items = [
   },
   {
     title: "Setting",
-    url: "/Setting",
+    url: "/onboarding",
     icon: Settings2,
   },
 ];
@@ -58,8 +58,11 @@ function App_Sidebar({ button, user }) {
       <PageLoad />
     </div>;
   }
-  const Profile = user?.profilePic || "";
-  const FullName = user?.Fullname || "";
+  const Profile = user.profilePic ;
+  const FullName = user.Fullname
+  ;
+
+
   const dispatch=useDispatch()
   const chatHandler=(userId)=>{
       console.log(userId)
@@ -99,18 +102,18 @@ function App_Sidebar({ button, user }) {
 
       <div className="h-[70vh] bg-[var(--one)] overflow-auto">
         {friends ? (
-          friends.map((frendsList) => (
+          friends.map((friendsList) => (
             <div
-            onClick={()=>chatHandler(frendsList._id)}
-              key={frendsList._id}
+            onClick={()=>chatHandler(friendsList._id)}
+              key={friendsList._id}
               className="flex  hover:bg-gray-200 hover:scale-105 duration-200 rounded-2xl cursor-pointer  m-2  space-x-2.5 "
             >
-              <Avatar className="mb-4">
-                <AvatarImage src={frendsList.profilePic} />
-                <AvatarFallback>CN</AvatarFallback>
+              <Avatar className="mb-4 border-1 border-black text-black bg-blue-200">
+                <AvatarImage src={friendsList.profilePic} />
+                <AvatarFallback> {friendsList.Fullname.charAt(0)} </AvatarFallback>
               </Avatar>
               <div className="">
-                <p className="text-black">{frendsList.Fullname}</p>
+                <p className="text-black">{friendsList.Fullname}</p>
                 <p></p>
               </div>
             </div>
@@ -120,11 +123,13 @@ function App_Sidebar({ button, user }) {
         )}
       </div>
       <div className="flex items-cente space-x-3 mt-2">
+        <Link to='/setting'>
         <Avatar className="mb-4">
           <AvatarImage src={Profile} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <p>@{FullName}</p>
+        </Link>
+        <p>@{user.Fullname}</p>
       </div>
     </Sidebar>
   );

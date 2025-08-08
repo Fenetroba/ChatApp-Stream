@@ -15,6 +15,7 @@ import SiderImg from "../../assets/hero.jpg";
 const Loginpage = ({ user }) => {
   console.log("Login user:", user);
   const { loading } = useSelector((state) => state.auth);
+  console.log(loading)
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -32,12 +33,12 @@ const Loginpage = ({ user }) => {
         email: "",
         password: "",
       });
-      toast(result.payload?.message || "Registration attempted", {
+      toast(result.payload?.message || "Login attempted", {
         style: { background: "#7fe635", color: "#fff" },
       });
       navigate("/");
     } else {
-      toast(result.payload?.message || "Registration attempted", {
+      toast(result.payload?.message || "Login attempted", {
         style: { background: "#570808", color: "#fff" },
       });
     }

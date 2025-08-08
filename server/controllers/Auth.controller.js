@@ -23,9 +23,10 @@ export const CreateUser = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({message: `[ ${email} ]this email is already exists` });
     }
-//     for create randum avater for user
+//     for create random avatar for user (use reliable DiceBear provider)
     const Inx = Math.floor(Math.random() * 100) + 1;
-    const randomAvatar = `https://avatar.iran.liara.run/public/${Inx}.png`;
+    const seed = encodeURIComponent(`${Fullname}-${Inx}`);
+    const randomAvatar = `https://api.dicebear.com/9.x/thumbs/png?seed=${seed}`;
 
 //     create new users
     const newUser = new User({ Fullname, email, password, profilePic: randomAvatar });

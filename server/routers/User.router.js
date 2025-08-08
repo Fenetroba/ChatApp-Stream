@@ -11,6 +11,6 @@ router.post('/friends-request/:friendId',RequestFriend)
 router.put('/friends-request/:requestId/accept',RequestFriend_accept)
 router.get('/friends-request',FriendsRequest)
 router.get('/getOutgoingReq',getOutGoingReq)
-router.get('/UpdateProfile',UpDateProfile)
+router.put('/UpdateProfile',UpDateProfile)
 
 export default router;
