@@ -17,8 +17,13 @@ app.use(cookieParser());
 
 // Configure CORS options if needed
 app.use(cors({
-  origin: true, // Replace with your client's origin
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://chatapp-stream.onrender.com']
+    : ['http://localhost:5173'],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  exposedHeaders: ['Set-Cookie'],
 }));
 app.use('/api/auth', AuthRoutes);
 app.use('/api/user', userRoutes);
