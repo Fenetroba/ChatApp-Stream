@@ -21,9 +21,13 @@ app.use(cors({
     ? ['https://chatapp-stream.onrender.com']
     : ['http://localhost:5173'],
   credentials: true,
+<<<<<<< HEAD
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   exposedHeaders: ['Set-Cookie'],
+=======
+  
+>>>>>>> bd85003 (commite)
 }));
 app.use('/api/auth', AuthRoutes);
 app.use('/api/user', userRoutes);
